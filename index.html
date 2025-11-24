@@ -2,20 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 16px;
-      line-height: 1.5;
-    }
-  </style>
+  <title>Journal</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome</h1>
-  <p>This site is deployed using GitHub + Netlify.</p>
+  <header>
+    <nav>
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="writing.html">writing</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Journal</h1>
+    <p class="tagline">thoughts, notes, and observations</p>
+
+    <section class="posts">
+      <article>
+        <time>2025.01</time>
+        <a href="#">on simplicity</a>
+      </article>
+      <article>
+        <time>2024.12</time>
+        <a href="#">finding stillness</a>
+      </article>
+      <article>
+        <time>2024.11</time>
+        <a href="#">first entry</a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>&mdash;</p>
+  </footer>
 </body>
 </html>
