@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Rado Milovanovic – coming soon." />
 
+  <!-- Fonts: one geometric/artistic, one clean -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     /* Basic reset */
     *, *::before, *::after {
@@ -19,7 +24,7 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
       background: #05060a;
       color: #f5f5f5;
@@ -31,7 +36,7 @@
       position: fixed;
       inset: 0;
       overflow: hidden;
-      z-index: -2;
+      z-index: -3;
     }
 
     .background-layer img {
@@ -42,24 +47,25 @@
       min-height: 120%;
       transform: translate(-50%, -50%);
       object-fit: cover;
-      filter: saturate(1.1) contrast(1.05) brightness(0.9);
+      /* Slightly brighter than before */
+      filter: saturate(1.15) contrast(1.06) brightness(1);
       opacity: 0;
-      transition: opacity 2s ease-in-out;
+      transition: opacity 2.5s ease-in-out;
     }
 
     .background-layer img.active {
       opacity: 1;
     }
 
-    /* Dark gradient overlay */
+    /* Softer, less dark overlay */
     .overlay {
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: -2;
       background:
-        radial-gradient(circle at 10% 0%, rgba(0,0,0,0.3), transparent 55%),
-        radial-gradient(circle at 90% 100%, rgba(0,0,0,0.4), transparent 60%),
-        linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+        radial-gradient(circle at 10% 0%, rgba(0,0,0,0.18), transparent 55%),
+        radial-gradient(circle at 95% 100%, rgba(0,0,0,0.25), transparent 60%),
+        linear-gradient(135deg, rgba(0,0,0,0.60), rgba(0,0,0,0.78));
       mix-blend-mode: multiply;
     }
 
@@ -69,7 +75,7 @@
       position: fixed;
       inset: 0;
       opacity: 0.08;
-      z-index: 0;
+      z-index: -1;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1600 900' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
       mix-blend-mode: soft-light;
     }
@@ -78,100 +84,96 @@
     .page {
       position: relative;
       height: 100vh;
+      width: 100vw;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem;
     }
 
-    .content {
-      max-width: 900px;
-      width: 100%;
+    /* Centered name block */
+    .centerpiece {
       text-align: center;
-      padding: 3rem 2rem;
-      border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: radial-gradient(circle at top left,
-                  rgba(255, 255, 255, 0.06),
-                  transparent 60%)
-                  rgba(4, 6, 14, 0.82);
-      backdrop-filter: blur(24px);
-      box-shadow:
-        0 30px 120px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.03);
+      pointer-events: none;
       animation: fadeInUp 1.4s ease-out forwards;
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(18px);
     }
 
-    .eyebrow {
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      opacity: 0.6;
-      margin-bottom: 1.25rem;
-    }
-
-    .title {
-      font-size: clamp(2.5rem, 4vw, 3.5rem);
+    .name {
+      font-family: "Unbounded", system-ui, sans-serif;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      margin-bottom: 1rem;
-    }
-
-    .title span {
-      opacity: 0.8;
-      font-weight: 300;
-    }
-
-    .subtitle {
-      font-size: 0.95rem;
-      opacity: 0.72;
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      font-size: 0.78rem;
       letter-spacing: 0.14em;
+      text-transform: uppercase;
+      /* Much bigger name */
+      font-size: clamp(3.2rem, 7vw, 5.3rem);
+      line-height: 1.12;
+    }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       opacity: 0.7;
     }
 
-    .meta-item {
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0.06),
-        rgba(255, 255, 255, 0.01)
-      );
-      backdrop-filter: blur(10px);
-    }
-
-    .footer {
+    /* Floating small info, distributed around */
+    .floating {
       position: fixed;
-      inset-inline: 0;
-      bottom: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.1rem 2.25rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
+      font-size: 0.70rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      opacity: 0.6;
+      opacity: 0.76;
       pointer-events: none;
+      white-space: nowrap;
     }
 
-    .footer span {
-      pointer-events: auto;
+    .floating::after {
+      content: "";
+      display: inline-block;
+      margin-left: 0.5rem;
+      width: 22px;
+      height: 1px;
+      background: rgba(245,245,245,0.35);
+      transform-origin: left center;
+    }
+
+    .floating-top-left {
+      top: 1.8rem;
+      left: 2rem;
+    }
+
+    .floating-top-right {
+      top: 2.2rem;
+      right: 2.2rem;
+    }
+
+    .floating-bottom-left {
+      bottom: 2rem;
+      left: 2rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.18em;
+    }
+
+    .floating-bottom-left::after {
+      display: none;
+    }
+
+    .floating-bottom-right {
+      bottom: 1.8rem;
+      right: 2.2rem;
+    }
+
+    /* Very subtle footer-like line in the middle bottom */
+    .floating-bottom-center {
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.55;
+      font-size: 0.63rem;
+      letter-spacing: 0.28em;
     }
 
     @keyframes fadeInUp {
@@ -183,18 +185,28 @@
 
     /* Mobile adjustments */
     @media (max-width: 640px) {
-      .content {
-        padding: 2.2rem 1.6rem;
-        border-radius: 24px;
+      .page {
+        padding: 1.5rem;
       }
 
-      .footer {
-        padding: 0.9rem 1.25rem;
-        font-size: 0.64rem;
+      .floating-top-left,
+      .floating-top-right {
+        font-size: 0.62rem;
       }
 
-      .meta {
-        gap: 0.6rem;
+      .floating-bottom-left {
+        bottom: 1.3rem;
+        left: 0.9rem;
+      }
+
+      .floating-bottom-right {
+        bottom: 1.2rem;
+        right: 1.2rem;
+      }
+
+      .floating-bottom-center {
+        font-size: 0.6rem;
+        bottom: 0.9rem;
       }
     }
   </style>
@@ -210,27 +222,34 @@
   <div class="overlay"></div>
   <div class="noise"></div>
 
-  <!-- Main content -->
+  <!-- Centered main content -->
   <main class="page">
-    <section class="content">
-      <div class="eyebrow">Milovanovic.li</div>
-
-      <h1 class="title">
-        Rado&nbsp;Milovanovic <span>/ Coming soon</span>
-      </h1>
-
-      <p class="subtitle">
-        A minimal corner of the internet for my work in economics,
-        data, and ideas worth revisiting. Full site arriving later.
-      </p>
-
-      <div class="meta">
-        <div class="meta-item">Zurich</div>
-        <div class="meta-item">Economics &amp; Data</div>
-        <div class="meta-item">2025</div>
-      </div>
+    <section class="centerpiece">
+      <h1 class="name">Rado&nbsp;Milovanovic</h1>
+      <div class="tagline">Coming soon</div>
     </section>
   </main>
+
+  <!-- Distributed small information -->
+  <div class="floating floating-top-left">
+    Milovanovic.li
+  </div>
+
+  <div class="floating floating-top-right">
+    Economics &amp; Data
+  </div>
+
+  <div class="floating floating-bottom-left">
+    Zurich
+  </div>
+
+  <div class="floating floating-bottom-right">
+    2025
+  </div>
+
+  <div class="floating floating-bottom-center">
+    Website in progress
+  </div>
 
   <!-- Tiny JS for background crossfade -->
   <script>
@@ -247,7 +266,7 @@
 
         current.classList.remove("active");
         next.classList.add("active");
-      }, 9000); // 9s per image, adjust if you like
+      }, 9000); // 9s per image
     })();
   </script>
 </body>
